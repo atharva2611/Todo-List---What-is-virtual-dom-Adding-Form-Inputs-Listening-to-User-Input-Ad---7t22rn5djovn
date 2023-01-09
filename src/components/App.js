@@ -43,7 +43,7 @@ function App() {
 					<div key={index}>
 						<li className="list">{task}</li>
 						<div>
-							<button className="btn" onClick={editHandler}>Edit</button>
+							<button className="btn">Edit</button>
 							<button className="btn" onClick={() => deleteTaskHandler(index)}>Delete</button>
 						</div>
 					</div>
