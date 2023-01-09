@@ -15,12 +15,14 @@ import "./../styles/App.css";
 
 function App() {
 	const [tasks, setTasks] = useState([])
+	const [editTask, setEditTask] = useState([])
 	const [textInput, setTextInput] = useState('');
 	const textChangeHandler = (event) => {
 		setTextInput(event.target.value)
 	}
 	const addTaskHandler = () => {
 		setTasks([...tasks, textInput])
+		setEditTask([...editTask,false])
 		setTextInput('')
 	}
 	const deleteTaskHandler = (index) => {
@@ -28,6 +30,21 @@ function App() {
 		const temp = [...tasks];
 		temp.splice(index,1);
 		setTasks([...temp]);
+	}
+	const editTaskHandler = (index) => {
+		const x = editTask[index];
+		const temp = [...editTask];
+		temp[index] = !x;
+		setEditTask(temp)
+	}
+	const saveTaskHandler = (index) => {
+
+		editTaskHandler(index)
+	}
+	const editChangeHandler = (event,index) => {
+		const temp = [...tasks];
+		temp[index] = event.target.value;
+		setTasks(temp);
 	}
 	return (
 	<div id="main">
@@ -41,10 +58,10 @@ function App() {
 				return (
 					// <List index={index} task={task} />
 					<div key={index}>
-						<li className="list">{task}</li>
+						{!editTask[index] ? <li className="list">{task}</li> : <div><input value={task} onChange={(event) => editChangeHandler(event,index)}/><button id="save" onClick={() => saveTaskHandler(index)}>Save</button></div>}
 						<div>
-							<button className="btn">Edit</button>
-							<button className="btn" onClick={() => deleteTaskHandler(index)}>Delete</button>
+							<button id="edit" className="btn" onClick={() => editTaskHandler(index)}>Edit</button>
+							<button id="delete" className="btn" onClick={() => deleteTaskHandler(index)}>Delete</button>
 						</div>
 					</div>
 				)
