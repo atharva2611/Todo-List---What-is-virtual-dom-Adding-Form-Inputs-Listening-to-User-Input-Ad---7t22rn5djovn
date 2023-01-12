@@ -58,10 +58,16 @@ function App() {
 				return (
 					// <List index={index} task={task} />
 					<div key={index}>
-						{!editTask[index] ? <li className="list">{task}</li> : <div><input className="edit" value={task} onChange={(event) => editChangeHandler(event,index)}/><button id="save" onClick={() => saveTaskHandler(index)}>Save</button></div>}
+						{editTask[index] ? 
+							<div>
+								<input id="edit" className="editTask" value={task} onChange={(event) => editChangeHandler(event,index)}/>
+								<button className="saveTask" id="save" onClick={() => saveTaskHandler(index)}>Save</button>
+							</div> :
+							<li className="list">{task}</li>
+						}
 						<div>
-							<button id="edit" className="btn" onClick={() => editTaskHandler(index)}>Edit</button>
-							<button id="delete" className="btn" onClick={() => deleteTaskHandler(index)}>Delete</button>
+							<button id="edit" className="btn edit" onClick={() => editTaskHandler(index)}>Edit</button>
+							<button id="delete" className="btn delete" onClick={() => deleteTaskHandler(index)}>Delete</button>
 						</div>
 					</div>
 				)
